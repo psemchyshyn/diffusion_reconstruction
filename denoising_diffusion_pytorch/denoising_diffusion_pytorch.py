@@ -465,7 +465,7 @@ class Dataset(data.Dataset):
 
     def __getitem__(self, index):
         path = self.paths[index]
-        img = Image.open(path).convert("RGB")
+        img = Image.open(path)
         return self.transform(img)
 
 # trainer class

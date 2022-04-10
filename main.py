@@ -5,14 +5,16 @@ torch.cuda.set_device(0)
 
 model = Unet(
     dim = 64,
-    dim_mults = (1, 2, 4, 8)
+    dim_mults = (1, 2, 4, 8),
+    channels = 1
 ).cuda()
 
 diffusion = GaussianDiffusion(
     model,
     image_size = 64,
     timesteps = 1000,   # number of steps
-    loss_type = 'l1'    # L1 or L2
+    loss_type = 'l2', # L1 or L2
+    channels = 1
 ).cuda()
 
 trainer = Trainer(
@@ -24,7 +26,8 @@ trainer = Trainer(
     train_num_steps = 700000,         # total training steps
     gradient_accumulate_every = 2,    # gradient accumulation steps
     ema_decay = 0.995,                # exponential moving average decay
-    fp16 = False                       # turn on mixed precision training with apex
+    fp16 = False, # turn on mixed precision training with apex
+    results_folder = "./resultsl2"
 )
 
 trainer.train()
